@@ -1,39 +1,67 @@
 {% extends 'reduced_base.html' %}
 
     {% block content %}
-
-
+  <link href="https://fonts.googleapis.com/css?family=Karla:400,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.8.95/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/login.css') }}">
+    <style>
+        .aspectwrapper {
+          display: inline-block; /* shrink to fit */
+          width: 100%;           /* whatever width you like */
+          position: relative;    /* so .content can use position: absolute */
+        }
+        .aspectwrapper::after {
+          padding-top: 56.25%; /* percentage of containing block _width_ */
+          display: block;
+          content: '';
+        }
+        .content {
+          position: absolute;
+          top: 0; bottom: 0; right: 0; left: 0;  /* follow the parent's edges */
+          outline: thin dashed green;            /* just so you can see the box */
+        }
+    </style>
     <body>
-    <div style = "padding-left:80px; padding-top: 30px;">
-            <h1>Welcome {{user.name}}</h1>
-            <hr>
+    <div class="aspectwrapper">
+          <div class="content">
 
-            {% if user.about_me %}
-                <p>
-                    {{ user.about_me }}
-                </p>
-            {% endif %}
-            {% if user.last_seen %}
-                <p>
-                    {{ user.last_seen }}
-                </p>
-            {% endif %}
+            <div style = "padding-left:80px; padding-top: 30px; display: inline-block; width: 100%; position: relative;">
+                    <h1>Welcome {{user.name}}</h1>
+                    <hr>
 
-            <p>Please see the posts below : </p>
+                    {% if user.about_me %}
+                        <p>
+                            {{ user.about_me }}
+                        </p>
+                    {% endif %}
+                    {% if user.last_seen %}
+                        <p>
+                            {{ user.last_seen }}
+                        </p>
+                    {% endif %}
 
-                {% for post in posts %}
-                    <p>{{ post.timestamp }} &nbsp; {{ post.request.name }}  &nbsp; <b>{{ post.body }}</b></p>
-                {% endfor %}
-            </hr>
-                <form method="post">
-                  <div class="form-group">
-                    {{ form.hidden_tag() }}
-                    {{ form.body(class="form-control", placeholder="Comment") }}
-                  </div>
-                    {{ form.submit(class="btn btn-block login-btn mb-4" ) }}
-                </form>
+                    <p>Please see the posts below : </p>
 
-    </div>
+                        {% for post in posts %}
+                            <p>{{ post.timestamp }} &nbsp; {{ post.request.name }}  &nbsp; <b>{{ post.body }}</b></p>
+                        {% endfor %}
+                    </hr>
+                        <form method="post">
+                          <div class="form-group" style="max-width:600px;">
+                            {{ form.hidden_tag() }}
+                            {{ form.body(class="form-control", placeholder="Comment") }}
+
+                          </div>
+                            <div class="form-group" style="max-width:100px;">
+                            {{ form.submit(class="btn btn-block login-btn mb-4" ) }}
+                            </div>
+                        </form>
+
+            </div>
+        </div>
+          </div>
+
 
     </body>
 
