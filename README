@@ -1,0 +1,12 @@
+
+
+Alembic is a sql alcehmy miration tool
+python flask-irate is a python wrapper around alembic
+used to keep versions of the database
+ie track chanes
+kinda like a mini ithub
+
+how alembic works
+1. compares the actual database vs new database
+2. populates miration scripts with the chanes (versions)
+3. then creates a new schema
