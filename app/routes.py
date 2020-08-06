@@ -5,8 +5,8 @@ from flask_login import current_user, login_user, logout_user
 from app import app, db
 
 from flask import flash, render_template, redirect, url_for, request
-from app.forms import LoginForm, Details, Registration, EditProfile
-from app.models import Person
+from app.forms import LoginForm, Details, Registration, EditProfile, UserPost
+from app.models import Person, Posts
 
 
 @app.route("/signup")
@@ -15,8 +15,23 @@ def signup():
 
 @app.route('/user/<username>')
 def profile(username):
+
     user = Person.query.filter_by(name=username).first_or_404()
     return render_template('profile.html', user=user)
+
+@app.route('/<username>/posts', methods=["GET", "POST"])
+def posts(username):
+    user = Person.query.filter_by(name=username).first_or_404()
+    posts = Posts.query.all()
+
+    form = UserPost()
+
+    if form.validate_on_submit():
+        post = Posts(body = form.body.data, user_id = current_user.id)
+        db.session.add(post)
+        db.session.commit()
+        return redirect(url_for('posts', username= current_user.name))
+    return render_template('posts.html', user=username, posts=posts, form=form)
 
 @app.route('/logout')
 def logout():
@@ -29,14 +44,17 @@ def edit_me(username):
     if form.validate_on_submit():
         print(username)
         user = Person.query.filter_by(name=username).first_or_404()
-        user.about_me = form.about_me.data
-        if form.username.data != None:
-            user.name = form.username.data
-        db.session.add(user)
-        db.session.commit()
-        flash("Congratulations, you have updated your profile")
-        print("Cheese Gromit")
-        return redirect(url_for('profile', username=current_user.name))
+        if Person.query.filter_by(name=form.username.data).first() == None:
+            user.about_me = form.about_me.data
+            if form.username.data != None:
+                user.name = form.username.data
+            db.session.add(user)
+            db.session.commit()
+            flash("Congratulations, you have updated your profile")
+            print("Cheese Gromit")
+            return redirect(url_for('profile', username=current_user.name))
+        else:
+            flash("This username is taken try again.")
     return render_template('edit_me.html', form=form)
 
 @app.route("/register", methods=["GET", "POST"])
@@ -68,7 +86,6 @@ def login():
         if not user.check_password(form.password.data):
             flash("Wrong password")
             return redirect(url_for("login"))
-        flash("Corret password. Welcome.")
         login_user(user, remember=False)
         return redirect("/")
 

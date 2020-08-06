@@ -32,7 +32,7 @@ class Person(db.Model, UserMixin):
 class Posts(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
-    body = db.Column(db.String(120), index=True, unique=True)
+    body = db.Column(db.String(120), index=True)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('person.id'))
     # request = db.relationship("Person", backref=backref("People", uselist=False))

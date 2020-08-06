@@ -19,12 +19,19 @@
                 </p>
             {% endif %}
 
-            <p>Please see your posts below : </p>
+            <p>Please see the posts below : </p>
 
-                {% for post in user.posts %}
+                {% for post in posts %}
                     <p>{{ post.timestamp }} <b>{{ post.body }}</b></p>
                 {% endfor %}
             </hr>
+                <form method="post">
+                  <div class="form-group">
+                    {{ form.hidden_tag() }}
+                    {{ form.body(class="form-control", placeholder="Comment") }}
+                  </div>
+                    {{ form.submit(class="btn btn-block login-btn mb-4" ) }}
+                </form>
 
     </div>
 
