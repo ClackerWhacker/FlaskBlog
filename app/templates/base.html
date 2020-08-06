@@ -58,6 +58,9 @@
         <a class="js-scroll-trigger" href="{{ url_for('profile', username=current_user.name)}}">Profile</a>
       </li>
       <li class="sidebar-nav-item">
+        <a class="js-scroll-trigger" href="{{ url_for('edit_me', username=current_user.name)}}">Edit Profile</a>
+      </li>
+      <li class="sidebar-nav-item">
         <a class="js-scroll-trigger" href="{{ url_for('logout')}}">Logout</a>
       </li>
       {% endif %}

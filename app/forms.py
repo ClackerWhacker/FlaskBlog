@@ -3,6 +3,12 @@ from wtforms import StringField, SubmitField, PasswordField
 from wtforms.validators import DataRequired, EqualTo, ValidationError, Email
 from app.models import Person
 
+
+class EditProfile(FlaskForm):
+    username = StringField("Username")
+    about_me = StringField("About me section", validators=[DataRequired()])
+    submit = SubmitField("Submit")
+    
 class Registration(FlaskForm):
     username = StringField("Username", validators=[DataRequired()])
     email = StringField("Email", validators=[DataRequired(), Email()])

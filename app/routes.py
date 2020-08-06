@@ -5,7 +5,7 @@ from flask_login import current_user, login_user, logout_user
 from app import app, db
 
 from flask import flash, render_template, redirect, url_for, request
-from app.forms import LoginForm, Details, Registration
+from app.forms import LoginForm, Details, Registration, EditProfile
 from app.models import Person
 
 
@@ -22,6 +22,22 @@ def profile(username):
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
+@app.route("/<username>/edit_me", methods=["GET", "POST"])
+def edit_me(username):
+    form = EditProfile()
+    if form.validate_on_submit():
+        print(username)
+        user = Person.query.filter_by(name=username).first_or_404()
+        user.about_me = form.about_me.data
+        if form.username.data != None:
+            user.name = form.username.data
+        db.session.add(user)
+        db.session.commit()
+        flash("Congratulations, you have updated your profile")
+        print("Cheese Gromit")
+        return redirect(url_for('profile', username=current_user.name))
+    return render_template('edit_me.html', form=form)
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
