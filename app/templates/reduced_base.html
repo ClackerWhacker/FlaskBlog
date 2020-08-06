@@ -45,8 +45,12 @@
         <a class="js-scroll-trigger" href="{{ url_for('register')}}">Register</a>
       </li>
       {% else %}
+
       <li class="sidebar-nav-item">
         <a class="js-scroll-trigger" href="{{ url_for('profile', username=current_user.name)}}">Profile</a>
+      </li>
+      <li class="sidebar-nav-item">
+        <a class="js-scroll-trigger" href="{{ url_for('posts', username=current_user.name)}}">Posts</a>
       </li>
       <li class="sidebar-nav-item">
         <a class="js-scroll-trigger" href="{{ url_for('edit_me', username=current_user.name)}}">Edit Profile</a>

@@ -35,7 +35,7 @@ class Posts(db.Model):
     body = db.Column(db.String(120), index=True)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('person.id'))
-    # request = db.relationship("Person", backref=backref("People", uselist=False))
+    request = db.relationship("Person", backref=backref("Posts", uselist=False))
 
     def __repr__(self):
         return '<Posts {}>'.format(self.body)

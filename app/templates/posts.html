@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'reduced_base.html' %}
 
     {% block content %}
 
@@ -22,7 +22,7 @@
             <p>Please see the posts below : </p>
 
                 {% for post in posts %}
-                    <p>{{ post.timestamp }} <b>{{ post.body }}</b></p>
+                    <p>{{ post.timestamp }} &nbsp; {{ post.request.name }}  &nbsp; <b>{{ post.body }}</b></p>
                 {% endfor %}
             </hr>
                 <form method="post">
