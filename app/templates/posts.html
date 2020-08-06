@@ -16,9 +16,12 @@
                     <p>Please see the posts below : </p>
 
                         {% for post in posts %}
-                            <p>{{ post.timestamp }} &nbsp; {{ post.request.name }}  &nbsp; <b>{{ post.body }}</b></p>
+                            <p>{{ post.request.name }}</p>
+                            <p>{{ post.timestamp }} </p>
+                            <p><b>{{ post.body }}</b></p>
+                            <hr>
+
                         {% endfor %}
-                    </hr>
                         <form method="post">
                           <div class="form-group" style="min-width: 150px; max-width:600px; ">
                             {{ form.hidden_tag() }}
